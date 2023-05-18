@@ -2,10 +2,11 @@ import React from "react";
 import {
   Button,
   Container,
-  Group,
+  Flex,
   NumberInput,
   Paper,
   Select,
+  Title,
 } from "@mantine/core";
 import { IconChevronDown } from "@tabler/icons-react";
 
@@ -16,18 +17,26 @@ const Filters = () => {
         <Paper
           w={300}
           p={20}
-          style={{
-            border: "1px solid ",
-            borderColor: "#EAEBED",
+          sx={{
+            border: "1px solid #EAEBED",
             borderRadius: 15,
           }}
         >
-          <Group>
-            <h5>{"Фильтры"}</h5>
-            <Button>{"Сбросить все х"}</Button>
-          </Group>
+          <Flex justify={"space-between"} align={"center"}>
+            <Title order={4}>{"Фильтры"}</Title>
+            <Button
+              sx={{
+                border: "none",
+                color: "#ACADB9",
+                background: "none",
+                ":hover": { background: "none" },
+              }}
+            >
+              {"Сбросить все х"}
+            </Button>
+          </Flex>
 
-          <p>{"Отрасль"}</p>
+          <Title order={5}>{"Отрасль"}</Title>
           <Select
             placeholder="Выберите Отрасль"
             rightSection={<IconChevronDown size="1rem" />}
@@ -35,7 +44,7 @@ const Filters = () => {
             styles={{ rightSection: { pointerEvents: "none" } }}
             data={["React", "Angular", "Svelte", "Vue"]}
           />
-          <p>{"Оклад"}</p>
+          <Title order={5}>{"Оклад"}</Title>
           <NumberInput placeholder="От" />
           <NumberInput placeholder="До" />
           <Button w={"100%"}>{"Применить"}</Button>

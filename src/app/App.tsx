@@ -5,8 +5,8 @@ import {
   Header,
   MantineProvider,
 } from "@mantine/core";
-import Filters from "./components/Filters";
-import JobList from "./components/JobList";
+import Filters from "../components/Filters";
+import JobList from "../components/JobList";
 
 export default function App() {
   return (
