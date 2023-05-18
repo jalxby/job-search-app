@@ -1,26 +1,34 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import {
+  AppShell,
+  Container,
+  Group,
+  Header,
+  MantineProvider,
+} from "@mantine/core";
+import Filters from "./components/Filters";
+import JobList from "./components/JobList";
 
-function App() {
+export default function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <MantineProvider withGlobalStyles withNormalizeCSS>
+      <AppShell
+        padding="md"
+        header={
+          <Header height={60} p="xs">
+            <Container size={"xl"}>{"HI!"}</Container>
+          </Header>
+        }
+        styles={(theme) => ({
+          main: { backgroundColor: theme.colors.gray[0] },
+        })}
+      >
+        <Container size={"xl"}>
+          <Group spacing={"xl"} align={"stretch"}>
+            <Filters />
+            <JobList />
+          </Group>
+        </Container>
+      </AppShell>
+    </MantineProvider>
   );
 }
-
-export default App;
