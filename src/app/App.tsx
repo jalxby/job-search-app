@@ -1,14 +1,23 @@
 import {
   AppShell,
+  Button,
   Container,
   Group,
   Header,
   MantineProvider,
 } from "@mantine/core";
-import Filters from "../components/Filters";
+import Filters from "../features/JobSearch/Filters/Filters";
 import JobList from "../components/JobList";
+import { useEffect } from "react";
+import { jobAPI } from "../api/api";
+import { useAppDispatch } from "./store";
+import { getJobsTC } from "../features/JobSearch/joblist-reducer";
 
 export default function App() {
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(getJobsTC());
+  }, []);
   return (
     <MantineProvider withGlobalStyles withNormalizeCSS>
       <AppShell

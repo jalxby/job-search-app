@@ -6,8 +6,13 @@ import {
 } from "redux";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import thunkMiddleware, { ThunkDispatch } from "redux-thunk";
+import { appReducer } from "./app-reducer";
+import JobListReducer from "../features/JobSearch/joblist-reducer";
 
-const rootReducer = combineReducers({});
+const rootReducer = combineReducers({
+  app: appReducer,
+  jobs: JobListReducer,
+});
 
 export const store = legacy_createStore(
   rootReducer,
