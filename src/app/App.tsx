@@ -1,6 +1,5 @@
 import {
   AppShell,
-  Button,
   Container,
   Group,
   Header,
@@ -8,15 +7,24 @@ import {
 } from "@mantine/core";
 import Filters from "../features/JobSearch/Filters/Filters";
 import JobList from "../components/JobList";
-import { useEffect } from "react";
-import { jobAPI } from "../api/api";
-import { useAppDispatch } from "./store";
-import { getJobsTC } from "../features/JobSearch/joblist-reducer";
+
+import React, { useEffect } from "react";
+import { NavLink, Route, Routes } from "react-router-dom";
+import Favourites from "../features/Favourites/Favourites";
+import {
+  getFavouritesTC,
+  getIndustryListTC,
+  getJobsTC,
+} from "../features/JobSearch/joblist-reducer";
+import { useAppDispatch, useAppSelector } from "./store";
 
 export default function App() {
   const dispatch = useAppDispatch();
+  const searchParams = useAppSelector((state) => state.jobs.searchParams);
+
   useEffect(() => {
-    dispatch(getJobsTC());
+    dispatch(getJobsTC(searchParams));
+    dispatch(getIndustryListTC());
   }, []);
   return (
     <MantineProvider withGlobalStyles withNormalizeCSS>
@@ -24,7 +32,10 @@ export default function App() {
         padding="md"
         header={
           <Header height={60} p="xs">
-            <Container size={"xl"}>{"HI!"}</Container>
+            <Container size={"xl"}>
+              <NavLink to={"/search"}>search</NavLink>
+              <NavLink to={"/favourites"}>favourites</NavLink>
+            </Container>
           </Header>
         }
         styles={(theme) => ({
@@ -34,7 +45,10 @@ export default function App() {
         <Container size={"xl"}>
           <Group spacing={"xl"} align={"stretch"}>
             <Filters />
-            <JobList />
+            <Routes>
+              <Route path={"/search"} element={<JobList />} />
+              <Route path={"/favourites"} element={<Favourites />} />
+            </Routes>
           </Group>
         </Container>
       </AppShell>

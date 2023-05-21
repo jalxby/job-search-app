@@ -18,6 +18,34 @@ const instance = axios.create({
   },
 });
 
+export const authAPI = {
+  login() {
+    return instance.get("oauth2/password", { params: authParams });
+  },
+};
+
+export const jobAPI = {
+  getJobs(params: SearchParamsType | number[]) {
+    debugger;
+    return instance.get<ResponseType>("vacancies", { params });
+  },
+  getIndustryList() {
+    return instance.get("catalogues");
+  },
+  // getFavourites(favourites: number[]) {
+  //   return instance.get<ResponseType>("vacancies");
+  // },
+};
+
+export type SearchParamsType = {
+  page: number;
+  count: number;
+  published: number;
+  keyword: string;
+  payment_from: number;
+  payment_to: number;
+  catalogues?: number;
+};
 type AuthParamsType = {
   login: string;
   password: string;
@@ -27,20 +55,9 @@ type AuthParamsType = {
 };
 
 type ResponseType = {
+  total: number;
+  more: boolean;
+  subscription_id: number;
+  subscription_active: boolean;
   objects: Array<JobItemType>;
-};
-
-export const authAPI = {
-  login() {
-    return instance.get("oauth2/password", { params: authParams });
-  },
-};
-
-export const jobAPI = {
-  getJobs(page?: number, count?: number) {
-    return instance.get<ResponseType>("vacancies", { params: { page, count } });
-  },
-  getIndustryList() {
-    return instance.get("catalogues");
-  },
 };
