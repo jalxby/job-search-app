@@ -25,16 +25,15 @@ export const authAPI = {
 };
 
 export const jobAPI = {
-  getJobs(params: SearchParamsType | number[]) {
-    debugger;
+  getJobs(params: SearchParamsType | { ids: number[] }) {
     return instance.get<ResponseType>("vacancies", { params });
   },
   getIndustryList() {
     return instance.get("catalogues");
   },
-  // getFavourites(favourites: number[]) {
-  //   return instance.get<ResponseType>("vacancies");
-  // },
+  getJob(id: number) {
+    return instance.get(`vacancies/${id}`);
+  },
 };
 
 export type SearchParamsType = {

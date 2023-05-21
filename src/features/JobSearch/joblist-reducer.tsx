@@ -1,7 +1,6 @@
 import { Dispatch } from "redux";
 import { jobAPI, SearchParamsType } from "../../api/api";
 import { AppRootStateType, AppThunkDispatch, ThunkType } from "../../app/store";
-import { IndustryType } from "./Filters/filter-reducer";
 
 const initState: InitStateType = {
   objects: [],
@@ -74,8 +73,11 @@ export const jobListReducer = (
     case "REMOVE-FROM-FAVOURITES":
       return {
         ...state,
+        objects: state.objects.map((o) =>
+          o.id === action.id ? { ...o, isFavourite: false } : o
+        ),
         favouriteObjectsIDS: state.favouriteObjectsIDS.filter(
-          (j) => j !== action.id
+          (o) => o !== action.id
         ),
       };
     case "SET-FAVOURITES":
@@ -209,10 +211,20 @@ export const getFavouritesTC =
   async (dispatch: Dispatch<ActionType>) => {
     try {
       if (ids.length !== 0) {
-        const res = await jobAPI.getJobs(ids);
+        const res = await jobAPI.getJobs({ ids });
         dispatch(setFavourites(res.data.objects));
-        console.log("from request favourite", res);
+      } else {
+        dispatch(setFavourites([]));
       }
+    } catch (e) {}
+  };
+
+export const getJobTC =
+  (id: string): ThunkType =>
+  async (dispatch: Dispatch<ActionType>) => {
+    try {
+      const res = await jobAPI.getJob(Number(id));
+      dispatch(setJobsAC(res.data.objects));
     } catch (e) {}
   };
 //types
@@ -245,7 +257,24 @@ export type JobItemType = {
   payment_to: number;
   payment_from: number;
   currency: string;
+  vacancyRichText: string;
 };
+
+export type IndustryType = {
+  title_rus: string;
+  url_rus: string;
+  title: string;
+  title_trimmed: string;
+  key: number;
+  positions: Position[];
+};
+export interface Position {
+  title_rus: string;
+  url_rus: string;
+  title: string;
+  id_parent: number;
+  key: number;
+}
 
 export type setJobsActionType = ReturnType<typeof setJobsAC>;
 export type setPagesTotalActionType = ReturnType<typeof setPagesTotalAC>;

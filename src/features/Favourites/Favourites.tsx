@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/store";
 import JobItem from "../../components/JobItem";
 import { getFavouritesTC } from "../JobSearch/joblist-reducer";
+import EmptyState from "../../components/EmptyState/EmptyState";
 
 const Favourites = () => {
   const favourites = useAppSelector((state) => state.jobs.favouriteObjects);
@@ -9,11 +10,14 @@ const Favourites = () => {
   const favouriteObjectsIDS = useAppSelector(
     (state) => state.jobs.favouriteObjectsIDS
   );
-  console.log(favouriteObjectsIDS);
-  console.log(favourites);
+
   useEffect(() => {
     dispatch(getFavouritesTC(favouriteObjectsIDS));
-  }, [dispatch, favouriteObjectsIDS]);
+  }, [favouriteObjectsIDS]);
+  if (favouriteObjectsIDS.length === 0) {
+    return <EmptyState />;
+  }
+
   return (
     <div>
       {favourites.map((f) => (

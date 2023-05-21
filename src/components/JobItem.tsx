@@ -6,12 +6,13 @@ import {
   IconStar,
   IconStarFilled,
 } from "@tabler/icons-react";
-import { useAppDispatch, useAppSelector } from "../app/store";
+import { useAppDispatch } from "../app/store";
 import {
   addToFavouritesAC,
   ObjectType,
   removeFromFavouritesAC,
 } from "../features/JobSearch/joblist-reducer";
+import { Link } from "react-router-dom";
 
 type PropsType = {
   item: ObjectType;
@@ -24,9 +25,9 @@ const JobItem = ({ item, ...props }: PropsType) => {
     dispatch(addToFavouritesAC(item.id));
   };
   const removeFromFavourites = () => {
-    debugger;
     dispatch(removeFromFavouritesAC(item.id));
   };
+
   if (item.payment_from && item.payment_to) {
     payment = `з/п от ${item.payment_from} - ${item.payment_to}`;
   }
@@ -43,7 +44,7 @@ const JobItem = ({ item, ...props }: PropsType) => {
         w={"100%"}
         p={20}
         sx={{
-          height: "140px",
+          height: "auto",
           border: "1px solid ",
           borderColor: "#EAEBED",
           borderRadius: 15,
@@ -54,7 +55,9 @@ const JobItem = ({ item, ...props }: PropsType) => {
       >
         <Flex justify={"space-between"}>
           <Title color={`#5E96FC`} order={3}>
-            {item.profession}
+            <Text component={Link} to={`/description/${item.id}`}>
+              {item.profession}
+            </Text>
           </Title>
           <div>
             {item.isFavourite ? (

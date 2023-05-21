@@ -5,22 +5,30 @@ import {
   Header,
   MantineProvider,
 } from "@mantine/core";
-import Filters from "../features/JobSearch/Filters/Filters";
 import JobList from "../components/JobList";
 
 import React, { useEffect } from "react";
 import { NavLink, Route, Routes } from "react-router-dom";
 import Favourites from "../features/Favourites/Favourites";
 import {
-  getFavouritesTC,
   getIndustryListTC,
   getJobsTC,
 } from "../features/JobSearch/joblist-reducer";
 import { useAppDispatch, useAppSelector } from "./store";
+import SelectedJobPage from "../features/SelectedJob/SelectedJobPage";
+import EmptyState from "../components/EmptyState/EmptyState";
+import s from "./App.module.scss";
+
+type NavLinkProps = {
+  isActive: boolean;
+};
 
 export default function App() {
   const dispatch = useAppDispatch();
   const searchParams = useAppSelector((state) => state.jobs.searchParams);
+
+  const naviStyle = ({ isActive }: NavLinkProps) =>
+    isActive ? s.active : s.pending;
 
   useEffect(() => {
     dispatch(getJobsTC(searchParams));
@@ -32,9 +40,22 @@ export default function App() {
         padding="md"
         header={
           <Header height={60} p="xs">
-            <Container size={"xl"}>
-              <NavLink to={"/search"}>search</NavLink>
-              <NavLink to={"/favourites"}>favourites</NavLink>
+            <Container className={s.container} size={"xl"}>
+              <div className={s.logo}>
+                <div className={s.image}>
+                  <div className={s.eclipseOne}></div>
+                  <div className={s.eclipseTwo}></div>
+                </div>
+                <div className={s.text}>{"Jobored"}</div>
+              </div>
+              <div className={s.navigation}>
+                <NavLink className={naviStyle} to={"/search"}>
+                  Поиск вакансий
+                </NavLink>
+                <NavLink className={naviStyle} to={"/favourites"}>
+                  Избранное
+                </NavLink>
+              </div>
             </Container>
           </Header>
         }
@@ -44,10 +65,11 @@ export default function App() {
       >
         <Container size={"xl"}>
           <Group spacing={"xl"} align={"stretch"}>
-            <Filters />
             <Routes>
               <Route path={"/search"} element={<JobList />} />
               <Route path={"/favourites"} element={<Favourites />} />
+              <Route path={"/description/:id"} element={<SelectedJobPage />} />
+              <Route path={"/empty"} element={<EmptyState />} />
             </Routes>
           </Group>
         </Container>

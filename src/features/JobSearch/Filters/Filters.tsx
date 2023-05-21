@@ -12,8 +12,6 @@ import { IconChevronDown } from "@tabler/icons-react";
 import { useAppDispatch, useAppSelector } from "../../../app/store";
 import { useForm } from "@mantine/form";
 import { applyFilterTC } from "../joblist-reducer";
-import JobList from "../../../components/JobList";
-import { Route } from "react-router-dom";
 
 const Filters = () => {
   const form = useForm({

@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { IconSearch } from "@tabler/icons-react";
 import { Button, Input } from "@mantine/core";
-import { useAppDispatch } from "../app/store";
-import { applySearchTC } from "../features/JobSearch/joblist-reducer";
+import { useAppDispatch } from "../../app/store";
+import { applySearchTC } from "./joblist-reducer";
 
 const Search = () => {
   const [value, setValue] = useState<string>("");
