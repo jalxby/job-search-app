@@ -14,7 +14,10 @@ const EmptyState = (props: PropsType) => {
       <img className={s.image} src={nothingFound} alt="nothingFound" />
       <text className={s.message}>{"Упс, здесь еще ничего нет!"}</text>
       {props.showButton && (
-        <Button onClick={() => navigate("/")} className={s.button}>
+        <Button
+          onClick={() => navigate("/job-search-app")}
+          className={s.button}
+        >
           <text className={s.buttonText}>{"Поиск вакансий"}</text>
         </Button>
       )}

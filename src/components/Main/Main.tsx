@@ -23,11 +23,11 @@ const Main = () => {
     <div className={s.main}>
       <div className={s.container}>
         <Routes>
-          <Route path={"/"} element={<JobList />} />
+          <Route path={"/job-search-app"} element={<JobList />} />
           <Route path={"/favourites"} element={<Favourites />} />
           <Route path={"/description/:id"} element={<SelectedJobPage />} />
           <Route path={"/empty"} element={<EmptyState showButton={true} />} />
-          <Route path={"*"} element={<EmptyState showButton={true} />} />
+          <Route path={"/*"} element={<EmptyState showButton={true} />} />
         </Routes>
       </div>
     </div>

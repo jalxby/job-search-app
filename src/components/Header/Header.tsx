@@ -19,7 +19,7 @@ const Header = () => {
           <div className={s.text}>{"Jobored"}</div>
         </div>
         <div className={s.navigation}>
-          <NavLink className={naviStyle} to={"/"}>
+          <NavLink className={naviStyle} to={"/job-search-app/"}>
             Поиск вакансий
           </NavLink>
           <NavLink className={naviStyle} to={"/favourites"}>
