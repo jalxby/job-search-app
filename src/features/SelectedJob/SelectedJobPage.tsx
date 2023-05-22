@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from "../../app/store";
 import { getJobTC } from "../JobSearch/joblist-reducer";
 import JobItem from "../../components/JobItem";
 import parse from "html-react-parser";
-import { Paper } from "@mantine/core";
+import { Container, Paper } from "@mantine/core";
 
 const SelectedJobPage = () => {
   const { id } = useParams();
@@ -19,7 +19,7 @@ const SelectedJobPage = () => {
     }
   }, [dispatch, id]);
   return (
-    <>
+    <Container sx={{ margin: "0 auto", padding: 0, width: "1200px" }}>
       {item.map((i) => {
         return (
           <div key={i.id}>
@@ -31,6 +31,7 @@ const SelectedJobPage = () => {
                 borderRadius: 12,
                 background: `#FFFFFF`,
                 padding: "24px",
+                marginTop: "20px",
               }}
             >
               {parse(i.vacancyRichText)}
@@ -38,7 +39,7 @@ const SelectedJobPage = () => {
           </div>
         );
       })}
-    </>
+    </Container>
   );
 };
 

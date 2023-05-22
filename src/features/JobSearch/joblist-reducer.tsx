@@ -1,6 +1,7 @@
 import { Dispatch } from "redux";
 import { jobAPI, SearchParamsType } from "../../api/api";
 import { AppRootStateType, AppThunkDispatch, ThunkType } from "../../app/store";
+import { AppActionsType, setAppStatusAC } from "../../app/app-reducer";
 
 const initState: InitStateType = {
   objects: [],
@@ -142,6 +143,7 @@ export const setPageTC =
 export const getJobsTC =
   (searchParams: SearchParamsType): ThunkType =>
   async (dispatch: Dispatch<ActionType>, getState: () => AppRootStateType) => {
+    dispatch(setAppStatusAC("loading"));
     const state = getState();
     const params: SearchParamsType = {
       ...state.jobs.searchParams,
@@ -155,7 +157,10 @@ export const getJobsTC =
         res.data.total >= initState.total ? initState.total : res.data.total;
       const pagesTotal = total / searchParams.count + 1;
       dispatch(setPagesTotalAC(pagesTotal));
-    } catch (e) {}
+    } catch (e) {
+    } finally {
+      dispatch(setAppStatusAC("idle"));
+    }
   };
 export const getIndustryListTC =
   (): ThunkType => async (dispatch: Dispatch<ActionType>) => {
@@ -167,6 +172,7 @@ export const getIndustryListTC =
 export const applySearchTC =
   (keyword: string): ThunkType =>
   async (dispatch: Dispatch<ActionType>, getState: () => AppRootStateType) => {
+    dispatch(setAppStatusAC("loading"));
     const state = getState();
     const params: SearchParamsType = {
       ...state.jobs.searchParams,
@@ -178,11 +184,15 @@ export const applySearchTC =
       dispatch(setJobsAC(res.data.objects));
       dispatch(setSearchParamsAC(params));
       dispatch(setCurrentPageAC(1));
-    } catch (e) {}
+    } catch (e) {
+    } finally {
+      dispatch(setAppStatusAC("idle"));
+    }
   };
 export const applyFilterTC =
   (filter: FilterValues): ThunkType =>
   async (dispatch: Dispatch<ActionType>, getState: () => AppRootStateType) => {
+    dispatch(setAppStatusAC("loading"));
     const state = getState();
     let catalogues;
     if (filter.industry) {
@@ -203,12 +213,16 @@ export const applyFilterTC =
       dispatch(setJobsAC(res.data.objects));
       dispatch(setSearchParamsAC(params));
       dispatch(setCurrentPageAC(1));
-    } catch (e) {}
+    } catch (e) {
+    } finally {
+      dispatch(setAppStatusAC("idle"));
+    }
   };
 
 export const getFavouritesTC =
   (ids: number[]): ThunkType =>
   async (dispatch: Dispatch<ActionType>) => {
+    dispatch(setAppStatusAC("loading"));
     try {
       if (ids.length !== 0) {
         const res = await jobAPI.getJobs({ ids });
@@ -216,7 +230,10 @@ export const getFavouritesTC =
       } else {
         dispatch(setFavourites([]));
       }
-    } catch (e) {}
+    } catch (e) {
+    } finally {
+      dispatch(setAppStatusAC("idle"));
+    }
   };
 
 export const getJobTC =
@@ -268,6 +285,7 @@ export type IndustryType = {
   key: number;
   positions: Position[];
 };
+
 export interface Position {
   title_rus: string;
   url_rus: string;
@@ -289,4 +307,5 @@ type ActionType =
   | ReturnType<typeof setIndustryAC>
   | ReturnType<typeof addToFavouritesAC>
   | ReturnType<typeof removeFromFavouritesAC>
-  | ReturnType<typeof setFavourites>;
+  | ReturnType<typeof setFavourites>
+  | AppActionsType;

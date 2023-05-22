@@ -62,11 +62,13 @@ const JobItem = ({ item, ...props }: PropsType) => {
           <div>
             {item.isFavourite ? (
               <IconStarFilled
+                data-elem={`vacancy-${item.id}-shortlist-button`}
                 onClick={removeFromFavourites}
                 style={{ color: `#5E96FC` }}
               />
             ) : (
               <IconStar
+                data-elem={`vacancy-${item.id}-shortlist-button`}
                 onClick={addToFavourites}
                 style={{ color: `#ACADB9` }}
               />

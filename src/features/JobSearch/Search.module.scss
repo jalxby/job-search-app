@@ -1,0 +1,13 @@
+.input {
+
+  .buttonSearch {
+    background-color: #5E96FC;
+    border-radius: 8px;
+    right: 20px;
+
+    &:hover {
+      background-color: #DEECFF;
+      color: #000000;
+    }
+  }
+}
