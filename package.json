@@ -1,5 +1,6 @@
 {
   "name": "job-search-app",
+  "homepage": "https://jalxby.github.io/job-search-app",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -32,6 +33,7 @@
     "axios": "^1.4.0",
     "dayjs": "^1.11.7",
     "embla-carousel-react": "^8.0.0-rc03",
+    "gh-pages": "^5.0.0",
     "html-react-parser": "^3.0.16",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
