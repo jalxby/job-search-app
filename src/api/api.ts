@@ -18,11 +18,11 @@ const instance = axios.create({
   },
 });
 
-export const authAPI = {
-  login() {
-    return instance.get("oauth2/password", { params: authParams });
-  },
-};
+// export const authAPI = {
+//   login() {
+//     return instance.get("oauth2/password", { params: authParams });
+//   },
+// };
 
 export const jobAPI = {
   getJobs(params: SearchParamsType | { ids: number[] }) {
